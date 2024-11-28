@@ -58,6 +58,16 @@ ksu_source_mod() {
 	echo "bindhosts: service.sh - mode ksu_source_mod" >> /dev/kmsg
 }
 
+apatch_hr() {
+	target_hostsfile="/data/adb/hosts/0"
+	helper_mode="| hosts_redirect 💉"
+	[ ! -f $target_hostsfile ] && {
+		cat /system/etc/hosts > $target_hostsfile
+		susfs_clone_perm $target_hostsfile /system/etc/hosts
+		}
+	echo "bindhosts: service.sh - mode apatch_hr" >> /dev/kmsg
+}
+
 ##
 # check opmodes and then do something
 case $operating_mode in
@@ -68,6 +78,7 @@ case $operating_mode in
 	4) zn_hostsredirect ;;
 	5) ksu_susfs_open_redirect ;;
 	6) ksu_source_mod ;;
+	7) apatch_hr ;;
 	*) normal_mount ;; # catch invalid modes
 esac
 

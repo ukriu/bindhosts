@@ -71,6 +71,11 @@ case $operating_mode in
 	6)
 	target_hostsfile="/system/etc/hosts"
 	;;
+	7)
+	target_hostsfile="/data/adb/hosts/0"
+	helper_mode="| hosts_redirect 💉"
+	adaway_warn
+	;;
 	*) true ;; # catch invalid modes
 esac
 
